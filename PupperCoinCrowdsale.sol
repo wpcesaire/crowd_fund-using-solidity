@@ -7,12 +7,12 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/validation/TimedCrowdsale.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/distribution/RefundablePostDeliveryCrowdsale.sol";
 
-// @TODO: Inherit the crowdsale contracts
+// Inherited the crowdsale contracts
 contract PupperCoinCrowdsale is Crowdsale, MintedCrowdsale, CappedCrowdsale, TimedCrowdsale, RefundablePostDeliveryCrowdsale {
 
 
     constructor(
-        // @TODO: Fill in the constructor parameters!
+        // Filled in the constructor parameters!
         uint rate, // rate in PupperCoins
         PupperCoin token,  // name of the token
         address payable wallet, // sale beneficiary
@@ -52,16 +52,16 @@ contract PupperCoinSaleDeployer {
     )
         public
     {
-        // @TODO: create the PupperCoin and keep its address handy
+        // created the PupperCoin and kept its address handy
         PupperCoin token = new PupperCoin(name, symbol, 0);
         token_address = address(token);
 
-        // @TODO: create the PupperCoinSale and tell it about the token, set the goal, and set the open and close times to now and now + 24 weeks.
+        // created the PupperCoinSale and told it about the token, set the goal, and set the open and close times to now and now + 24 weeks.
         PupperCoinCrowdsale token_sale = new PupperCoinCrowdsale(1, token, wallet, goal, now, now + 24 weeks);
         token_sale_address = address(token_sale);
         
 
-        // make the PupperCoinSale contract a minter, then have the PupperCoinSaleDeployer renounce its minter role
+        // made the PupperCoinSale contract a minter, then had the PupperCoinSaleDeployer renounce its minter role
         token.addMinter(token_sale_address);
         token.renounceMinter();
     }
